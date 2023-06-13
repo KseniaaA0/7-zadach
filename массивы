@@ -1,0 +1,86 @@
+#include <iostream>                      // подключаем библиотеку ввода/ввывода
+#include <fstream>                       // подключаем библиотеку для работы с файлами
+ 
+using namespace std;                     // подключаем для использования cout/cin пространство имен
+ 
+int main(){ 
+ while(true){                            // беск. цикл
+     int i;                              //объявл. перемен. для подсчета пользов.
+     char choice;                        //объявл. перемен. для выь=бора ползователя
+     string users[100];                  //объявл. массив для логинов
+     string passwords[100];              //объявл. массив для паролей
+  
+     ifstream BD("BD.txt");              //открываем для чтения файл 
+  
+     for(i = 0; !BD.eof();i++){          //цикл, пока не конец файла
+         BD >> users[i] >> passwords[i]; // записываем в массивы логин и пароль
+     } 
+  
+     BD.close();                         //закрываем файл
+      
+     cout<<"All bd:"<<endl;
+     for(int j = 0;j < i; j++){          //цикл для прохождения по массивам паролей и пользователей
+         cout<< users[j] << " - " << passwords[j]<<endl; //выводим всех пользователей
+     } cout<<endl;                       // перевод на новую строку
+  
+     cout << "[1]register\n[2]login\n - "; //вывод действия для пользователя
+     cin >> choice;                      //запись выбора в переменную
+  
+     if(choice == '1'){                  //если ввели 1
+         string login,password;          //объявляем переменные для логина и пароля
+         int j;                          // объявляем переменную цикла
+         do{                             // цикл ду вайл
+            cout << "Enter you login - "; // просим ввести логин
+            cin >> login;                // вводим логин
+      
+         for(j = 0; j < i; j++){         //цикл для проверки логина
+             if(login == users[j]) break;// если есть совпадения выходим
+         }if(login != users[j]) break;   //выходим с цикла если нет совпадений
+      
+         cout<<"this login is wrong!" << endl; //выводим сообщение о некорректности логина если есть совпадение
+      
+         }while(true); 
+      
+         do{                             // цикл ду вайл
+             cout << "Enter you password - "; // просим ввести пароль
+             cin >> password;            // вводим пароль
+      
+             if(password.size() > 4) break; //проверяем чтоб пароль больше 3 символов
+             cout<<"this password is wronng!"<<endl; // выводим сообщение если не подходящий пароль
+      
+         }while(true); 
+      
+         ofstream BD("BD.txt",ios::app);  //открываем файл для дозаписи
+         BD << login << " " << password << endl;  //записываем в файл логин пароль
+         BD.close();                      // закрываем файл
+ }
+  
+     if(choice == '2'){                   //если ввели 1
+         string login, password;          //объявляем переменные для логина и пароля
+         int j;                           // объявляем переменную цикла
+      
+         do{                              // цикл ду вайл
+             cout<< "Enter you login - "; // просим ввести логин
+             cin>>login;                  //вводим логин
+              
+             for( j = 0;j < i; j++){      // цикл для проверки совпадений логина
+                 if(login == users[j]) break; //выход с цикла при совпадении
+             } if(login == users[j]) break; //выход с цикла при совпадении
+      
+             cout<<endl<<"this login is wrong!" << endl; //выводим сообщение о некорректности логина если есть нет совпадение
+         }while(true); 
+          
+         do{                              // цикл ду вайл
+             cout<< "Enter you password - "; // просим ввести пароль
+             cin>>password;               //вводим пароль
+              
+             if(password == passwords[j]) break; //выходим при совпадении пароля
+          
+             cout<<endl<<"this password is wrong!" << endl; //вывод сообщение о занятости пароля
+         }while(true);
+cout<<"succeful login!"<<endl;     //вывод при успешной авторизации
+         break;                             // выход с кода
+      
+     }
+ } 
+}
